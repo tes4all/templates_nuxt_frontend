@@ -10,11 +10,11 @@ custom:
     default: DEBUG
   customer:
     code: 999999
-    name: malin-template
-  project: malin-frontend-template-nuxt
+    name: malin
+  project: template
   basePath:
-    dev: "dev"
-    prod: ""
+    dev: 'dev'
+    prod: ''
   provisionedConcurrency:
     dev: 0
     prod: 0
@@ -33,10 +33,10 @@ custom:
     prod:
       - live-${self:custom.project}-${self:custom.customer.code}.4pd3v.com
   cloudfrontInvalidate:
-    - distributionIdKey: "CDNDistributionId"
+    - distributionIdKey: 'CDNDistributionId'
       autoInvalidate: true # Can be set to false to avoid automatic invalidation after the deployment. Useful if you want to manually trigger the invalidation later. Defaults to true.
       items: # one or more paths required
-        - "/*"
+        - '/*'
 
   # s3
   assets:
@@ -47,7 +47,7 @@ custom:
         prefix: ${self:custom.s3bucket}
         files:
           - source: .output/public/
-            globs: "**/**"
+            globs: '**/**'
             headers:
               CacheControl: no-cache
 
@@ -70,8 +70,8 @@ provider:
 
 package:
   patterns:
-    - "!**"
-    - ".output/server/**"
+    - '!**'
+    - '.output/server/**'
 
 functions:
   cfOriginRequest:
@@ -100,12 +100,12 @@ resources:
               OriginPath: /${self:custom.s3bucket}
               S3OriginConfig:
                 {
-                  "OriginAccessIdentity": "origin-access-identity/cloudfront/E2VFB614KHA4GD",
+                  'OriginAccessIdentity': 'origin-access-identity/cloudfront/E2VFB614KHA4GD',
                 }
               ConnectionAttempts: 3
               ConnectionTimeout: 10
             - Id: ssr
-              DomainName: !Sub "${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com"
+              DomainName: !Sub '${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com'
               OriginPath: "/${self:custom.basePath.${opt:stage, 'dev'}}"
               CustomOriginConfig:
                 HTTPSPort: 443
@@ -167,6 +167,6 @@ resources:
 
   Outputs:
     CDNDistributionId:
-      Description: "CloudFront Distribution ID"
+      Description: 'CloudFront Distribution ID'
       Value: !GetAtt CloudFrontDistribution.Id
 # aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
