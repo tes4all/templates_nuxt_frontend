@@ -5,14 +5,24 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
+  site: {
+    // set site by environment variables
+    url: process.env.VITE_APP_SITE_URL,
+    name: process.env.VITE_APP_SITE_NAME,
+    description: process.env.VITE_APP_SITE_DESCRIPTION,
+  },
+
   ssr: true,
   devtools: { enabled: true },
+  nitro: {
+    preset: 'aws-lambda',
+  },
 
   build: {
     transpile: ['@heroicons/vue'],
   },
 
-  modules: ['nuxt-headlessui'],
+  modules: ['nuxt-headlessui', '@nuxtjs/seo'],
   css: ['~/assets/css/main.css'],
 
   postcss: {

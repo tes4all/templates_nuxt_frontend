@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "nuxt dev",
-    "build": "NITRO_PRESET=aws-lambda nuxt build",
-    "build:test": "NITRO_PRESET=aws-lambda nuxt build --mode testsystem",
+    "build": "nuxt build",
+    "build:test": "NUXT_SITE_ENV=preview nuxt build --mode testsystem",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@nuxtjs/seo": "2.0.0-rc.19",
     "@tailwindcss/vite": "4.0.0-alpha.16",
     "@types/serve-static": "^1.15.7",
     "@typescript-eslint/eslint-plugin": "^8.3.0",
@@ -61,9 +62,6 @@
     "vite": "^5.4.2",
     "vite-plugin-eslint": "^1.8.1",
     "vue-eslint-parser": "^9.4.3"
-  },
-  "overrides": {
-    "vue": "^3.4.24"
   },
   "pnpm": {
     "overrides": {
