@@ -14,7 +14,7 @@ custom:
   project: template
   basePath:
     dev: 'dev'
-    prod: ''
+    prod: 'prod'
   provisionedConcurrency:
     dev: 0
     prod: 0
@@ -123,6 +123,7 @@ resources:
               CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # CachingOptimized
               ViewerProtocolPolicy: redirect-to-https
               ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # SecurityHeadersPolicy
+              Compress: true
             - PathPattern: /favicon.ico
               AllowedMethods:
                 - GET
@@ -132,6 +133,7 @@ resources:
               CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # CachingOptimized
               ViewerProtocolPolicy: redirect-to-https
               ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # SecurityHeadersPolicy
+              Compress: true
             - PathPattern: /static/*
               AllowedMethods:
                 - GET
@@ -141,6 +143,7 @@ resources:
               CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # CachingOptimized
               ViewerProtocolPolicy: redirect-to-https
               ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # SecurityHeadersPolicy
+              Compress: true
 
           DefaultCacheBehavior:
             AllowedMethods:
