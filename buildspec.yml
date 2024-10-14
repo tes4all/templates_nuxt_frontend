@@ -8,7 +8,6 @@ phases:
       nodejs: 20
   pre_build:
     commands:
-      - aws codeartifact login --region eu-central-1 --tool npm --repository jslib-private --domain fourzeroone
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_BASE_REF | sed 's/refs\/heads\///')
       - |
         if [ "${BRANCH}" = "" ] ; then

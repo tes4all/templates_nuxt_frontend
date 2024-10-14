@@ -3,5 +3,8 @@ export default {
   semi: false,
   singleQuote: true,
   singleAttributePerLine: true,
-  plugins: ["prettier-plugin-tailwindcss"]
+  bracketSameLine: false,
+  vueIndentScriptAndStyle: true,
+  htmlWhitespaceSensitivity: 'ignore',
+  plugins: ['prettier-plugin-tailwindcss'],
 }

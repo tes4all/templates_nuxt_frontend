@@ -5,6 +5,13 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
+  modules: [
+    '@nuxtjs/tailwindcss',
+    'nuxt-headlessui',
+    '@nuxtjs/seo',
+    '@nuxtjs/storybook',
+  ],
+
   site: {
     // set site by environment variables
     url: process.env.VITE_APP_SITE_URL,
@@ -21,20 +28,30 @@ export default defineNuxtConfig({
   build: {
     transpile: ['@heroicons/vue'],
   },
-
-  modules: ['nuxt-headlessui', '@nuxtjs/seo'],
   css: ['~/assets/css/main.css'],
-
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-    },
-  },
 
   //security: {
   //  headers: {},
   //},
+  tailwindcss: {
+    cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'last' }],
+    config: {
+      /* Extend the Tailwind config here */
+      content: [
+        './app/components/**/*.{js,vue,ts}',
+        './app/layouts/**/*.vue',
+        './app/pages/**/*.vue',
+        './app/plugins/**/*.{js,ts}',
+        './app/app.vue',
+        './app/error.vue',
+      ],
+    },
+  },
 
-  vite: {},
+  vite: {
+    optimizeDeps: {
+      include: ['jsdoc-type-pratt-parser'],
+    },
+  },
   compatibilityDate: '2024-08-12',
 })
