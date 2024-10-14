@@ -31,3 +31,6 @@ yarn-error.log*
 .nuxt
 .nitro
 .cache
+
+*storybook.log
+storybook-static
