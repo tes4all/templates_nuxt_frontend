@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     'nuxt-headlessui',
     '@nuxtjs/seo',
     '@nuxtjs/storybook',
+    'shadcn-nuxt',
   ],
 
   site: {
@@ -46,6 +47,18 @@ export default defineNuxtConfig({
         './app/error.vue',
       ],
     },
+  },
+
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: './app/components/ui',
   },
 
   vite: {
