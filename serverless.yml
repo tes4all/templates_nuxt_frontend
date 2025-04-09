@@ -1,7 +1,6 @@
 service: sls-frontend-${self:custom.tes.customerName}-${self:custom.tes.projectName}
 
 plugins:
-  - ./test-plugin
   - '@tes/serverless-default'
   - serverless-s3-deploy
   - serverless-cloudfront-invalidate
