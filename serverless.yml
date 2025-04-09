@@ -1,179 +1,33 @@
-service: sls-frontend-${self:custom.customer.name}-${self:custom.project}
+service: sls-frontend-${self:custom.tes.customerName}-${self:custom.tes.projectName}
 
 plugins:
+  - ./test-plugin
+  - '@tes/serverless-default'
   - serverless-s3-deploy
   - serverless-cloudfront-invalidate
+  - serverless-plugin-lambda-insights
 
 custom:
-  logLevel:
-    prod: INFO
-    default: DEBUG
-  customer:
-    code: 999999
-    name: malin
-  project: template
-  basePath:
-    dev: 'dev'
-    prod: 'prod'
-  provisionedConcurrency:
-    dev: 0
-    prod: 0
-  lambdaInsights:
-    defaultLambdaInsights: true
-  s3bucket: ${self:custom.customer.code}-${self:custom.customer.name}/${self:custom.project}/${opt:stage, 'dev'}
-  certificate:
-    dev: arn:aws:acm:us-east-1:495963541969:certificate/5976467c-2761-4293-a0df-ed47f8c33b3b
-    test: arn:aws:acm:us-east-1:495963541969:certificate/5976467c-2761-4293-a0df-ed47f8c33b3b
-    prod: arn:aws:acm:us-east-1:495963541969:certificate/5976467c-2761-4293-a0df-ed47f8c33b3b
-  aliases:
-    dev:
-      - dev-${self:custom.project}-${self:custom.customer.code}.4pd3v.com
-    test:
-      - test-${self:custom.project}-${self:custom.customer.code}.4pd3v.com
+  tes:
+    type: frontend
+    projectName: PROJECT_NAME_REPLACE_ME
+    customerCode: 999999
+    customerName: CUSTOMER_NAME_REPLACEME
     prod:
-      - live-${self:custom.project}-${self:custom.customer.code}.4pd3v.com
-  cloudfrontInvalidate:
-    - distributionIdKey: 'CDNDistributionId'
-      autoInvalidate: true # Can be set to false to avoid automatic invalidation after the deployment. Useful if you want to manually trigger the invalidation later. Defaults to true.
-      items: # one or more paths required
-        - '/*'
-
-  # s3
-  assets:
-    auto: true
-    targets:
-      - bucket: frontend--websites
-        empty: true
-        prefix: ${self:custom.s3bucket}
-        files:
-          - source: .output/public/
-            globs: '**/**'
-            headers:
-              CacheControl: no-cache
+      alias: live-${self:custom.tes.projectName}-${self:custom.tes.customerCode}.4pd3v.com
+      certificate: arn:aws:acm:us-east-1:495963541969:certificate/5976467c-2761-4293-a0df-ed47f8c33b3b
 
 provider:
   name: aws
-  deploymentBucket:
-    name: kinayu--serverless-deployments
-  runtime: nodejs20.x
-  architecture: arm64
   region: eu-central-1
-  deploymentMethod: direct
-  versionFunctions: false
-  memorySize: 1536
-  timeout: 20
-  logRetentionInDays: 14
-  environment:
-    stage: ${sls:stage}
-    LOGLEVEL: DEBUG
-  # endpointType: PRIVATE
+  runtime: nodejs20.x
 
-package:
-  patterns:
-    - '!**'
-    - '.output/server/**'
-
-functions:
-  cfOriginRequest:
-    handler: .output/server/index.handler
-    events:
-      - http:
-          method: GET
-          path: /
-          cors: true
-      - http:
-          method: GET
-          path: /{proxy+}
-          cors: true
-
-# cloudfront
 resources:
   Resources:
-    CloudFrontDistribution:
-      Type: AWS::CloudFront::Distribution
-      Properties:
-        DistributionConfig:
-          Aliases: ${self:custom.aliases.${opt:stage, 'dev'}}
-          Origins:
-            - Id: static
-              DomainName: frontend--websites.s3-website.eu-central-1.amazonaws.com
-              OriginPath: /${self:custom.s3bucket}
-              CustomOriginConfig:
-                HTTPPort: 80
-                HTTPSPort: 443
-                OriginProtocolPolicy: 'http-only'
-              ConnectionAttempts: 3
-              ConnectionTimeout: 10
-            - Id: ssr
-              DomainName: !Sub '${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com'
-              OriginPath: "/${self:custom.basePath.${opt:stage, 'dev'}}"
-              CustomOriginConfig:
-                HTTPSPort: 443
-                OriginProtocolPolicy: https-only
-                OriginSSLProtocols:
-                  - TLSv1.2
-
-          CacheBehaviors:
-            - PathPattern: /_nuxt/*
-              AllowedMethods:
-                - GET
-                - HEAD
-                - OPTIONS
-              TargetOriginId: static
-              CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # CachingOptimized
-              ViewerProtocolPolicy: redirect-to-https
-              ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # SecurityHeadersPolicy
-              Compress: true
-            - PathPattern: /favicon.ico
-              AllowedMethods:
-                - GET
-                - HEAD
-                - OPTIONS
-              TargetOriginId: static
-              CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # CachingOptimized
-              ViewerProtocolPolicy: redirect-to-https
-              ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # SecurityHeadersPolicy
-              Compress: true
-            - PathPattern: /static/*
-              AllowedMethods:
-                - GET
-                - HEAD
-                - OPTIONS
-              TargetOriginId: static
-              CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # CachingOptimized
-              ViewerProtocolPolicy: redirect-to-https
-              ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # SecurityHeadersPolicy
-              Compress: true
-
-          DefaultCacheBehavior:
-            AllowedMethods:
-              - GET
-              - HEAD
-              - OPTIONS
-            TargetOriginId: ssr
-            CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # CachingOptimized
-            ViewerProtocolPolicy: redirect-to-https
-            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03 # SecurityHeadersPolicy
-          CustomErrorResponses:
-            - ErrorCachingMinTTL: 86400 # cache errors for 24h
-              ErrorCode: 403 # object not found in bucket
-              ResponseCode: 404
-              ResponsePagePath: /404
-            - ErrorCachingMinTTL: 86400 # cache errors for 24h
-              ErrorCode: 404 # object not found in bucket
-              ResponseCode: 404
-              ResponsePagePath: /404
-          Comment: ${self:custom.s3bucket}
-          PriceClass: PriceClass_100
-          Enabled: true
-          ViewerCertificate:
-            AcmCertificateArn: ${self:custom.certificate.${opt:stage, 'dev'}}
-            SslSupportMethod: sni-only
-            MinimumProtocolVersion: TLSv1.2_2021
-          HttpVersion: http2and3
-
-  Outputs:
-    CDNDistributionId:
-      Description: 'CloudFront Distribution ID'
-      Value: !GetAtt CloudFrontDistribution.Id
-# aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+    # DONT delete this section!
+    # Add any additional resources here
+    # Example:
+    # MyS3Bucket:
+    #   Type: AWS::S3::Bucket
+    #   Properties:
+    #     BucketName: my-s3-bucket-${self:custom.tes.projectName}

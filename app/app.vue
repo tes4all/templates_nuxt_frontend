@@ -4,7 +4,7 @@
     <Button>Click me</Button>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
   // TODO: add nuxt/nitro variables to linter
   provideHeadlessUseId(() => useId()) // eslint-disable-line no-undef
 </script>
