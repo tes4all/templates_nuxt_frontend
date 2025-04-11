@@ -3,7 +3,6 @@ service: sls-frontend-${self:custom.tes.customerName}-${self:custom.tes.projectN
 plugins:
   - '@tes/serverless-default'
   - serverless-s3-deploy
-  - serverless-cloudfront-invalidate
   - serverless-plugin-lambda-insights
 
 custom:
@@ -20,13 +19,3 @@ provider:
   name: aws
   region: eu-central-1
   runtime: nodejs20.x
-
-resources:
-  Resources:
-    # DONT delete this section!
-    # Add any additional resources here
-    # Example:
-    # MyS3Bucket:
-    #   Type: AWS::S3::Bucket
-    #   Properties:
-    #     BucketName: my-s3-bucket-${self:custom.tes.projectName}

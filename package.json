@@ -6,8 +6,8 @@
   "scripts": {
     "upgrade": "pnpm upgrade --latest --save-exact",
     "dev": "nuxt dev",
-    "build": "nuxt build",
-    "build:test": "NUXT_SITE_ENV=preview nuxt build --mode testsystem",
+    "build": "NUXT_SITE_ENV=preview nuxt build --mode testsystem",
+    "build:prod": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -15,9 +15,10 @@
     "format:check": "prettier --check .",
     "lint": "eslint --fix .",
     "lint:check": "eslint .",
-    "sls": "serverless",
-    "deploy": "serverless deploy",
-    "remove": "serverless remove"
+    "sls": "serverless --stage dev",
+    "sls:prod": "serverless --stage prod",
+    "deploy": "pnpm build && pnpm sls s3deploy && pnpm sls deploy",
+    "deploy:prod": "pnpm build && pnpm sls:prod s3deploy && pnpm sls:prod deploy"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
@@ -38,7 +39,7 @@
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@nuxtjs/seo": "3.0.2",
-    "@tes/serverless-default": "npm:@jsr/tes__serverless-default@^0.2.1",
+    "@tes/serverless-default": "npm:@jsr/tes__serverless-default@^0.3.2",
     "@types/node": "^22.14.0",
     "@types/serve-static": "^1.15.7",
     "@typescript-eslint/eslint-plugin": "^8.29.1",
