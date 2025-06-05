@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
-  modules: ['nuxt-headlessui', '@nuxtjs/seo', 'shadcn-nuxt'],
+  modules: ['nuxt-headlessui', '@nuxtjs/seo', 'shadcn-nuxt', '@nuxt/content'],
 
   site: {
     // set site by environment variables
@@ -40,6 +40,20 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: './app/components/ui',
+  },
+  content: {
+    database: {
+      type: 'sqlite',
+      filename: '/tmp/contents.sqlite',
+    },
+  },
+  nitro: {
+    prerender: {
+      // Pre-render the homepage
+      routes: ['/'],
+      // Then crawl all the links on the page
+      crawlLinks: true,
+    },
   },
 
   vite: {
