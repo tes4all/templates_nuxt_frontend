@@ -19,6 +19,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   nitro: {
     preset: 'aws-lambda',
+    prerender: {
+      // Pre-render the homepage
+      routes: ['/'],
+      // Then crawl all the links on the page
+      crawlLinks: true,
+    },
   },
 
   build: {
@@ -45,14 +51,6 @@ export default defineNuxtConfig({
     database: {
       type: 'sqlite',
       filename: '/tmp/contents.sqlite',
-    },
-  },
-  nitro: {
-    prerender: {
-      // Pre-render the homepage
-      routes: ['/'],
-      // Then crawl all the links on the page
-      crawlLinks: true,
     },
   },
 

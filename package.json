@@ -30,7 +30,7 @@
     "better-sqlite3": "^11.10.0",
     "class-variance-authority": "^0.7.1",
     "express": "^5.1.0",
-    "lucide-vue-next": "^0.513.0",
+    "lucide-vue-next": "^0.514.0",
     "pinia": "^3.0.3",
     "radix-vue": "^1.9.17",
     "tailwind-merge": "^3.3.0",
@@ -42,16 +42,16 @@
     "@eslint/js": "^9.28.0",
     "@nuxtjs/seo": "3.0.3",
     "@tes/serverless-default": "npm:@jsr/tes__serverless-default@^0.3.2",
-    "@types/node": "^22.15.29",
-    "@types/serve-static": "^1.15.7",
-    "@typescript-eslint/eslint-plugin": "^8.33.1",
-    "@typescript-eslint/parser": "^8.33.1",
+    "@types/node": "^24.0.0",
+    "@types/serve-static": "^1.15.8",
+    "@typescript-eslint/eslint-plugin": "^8.34.0",
+    "@typescript-eslint/parser": "^8.34.0",
     "@vitejs/plugin-legacy": "^6.1.1",
     "@vue/server-renderer": "^3.5.16",
     "dotenv": "^16.5.0",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-vue": "^10.1.0",
+    "eslint-plugin-vue": "^10.2.0",
     "jsdoc-type-pratt-parser": "^4.1.0",
     "nuxt": "^3.17.5",
     "nuxt-headlessui": "^1.2.0",
@@ -61,7 +61,7 @@
     "prettier-eslint": "^16.4.2",
     "prettier-eslint-cli": "^8.0.1",
     "prettier-plugin-tailwindcss": "^0.6.12",
-    "serverless": "^4.16.1",
+    "serverless": "^4.17.0",
     "serverless-cloudfront-invalidate": "^1.12.2",
     "serverless-http": "^3.2.0",
     "serverless-plugin-lambda-insights": "^2.0.0",
@@ -70,7 +70,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.33.1",
+    "typescript-eslint": "^8.34.0",
     "unplugin-vue-markdown": "^28.3.1",
     "vite": "^6.3.5",
     "vite-plugin-eslint": "^1.8.1",
@@ -79,6 +79,16 @@
   "pnpm": {
     "overrides": {
       "@aws-sdk/types": "^3.535.0"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@tailwindcss/oxide",
+      "aws-sdk",
+      "better-sqlite3",
+      "core-js",
+      "esbuild",
+      "serverless",
+      "vue-demi"
+    ]
   }
 }
