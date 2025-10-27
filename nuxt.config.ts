@@ -18,17 +18,13 @@ export default defineNuxtConfig({
   ssr: true,
   devtools: { enabled: true },
   nitro: {
-    preset: 'aws-lambda',
+    preset: 'nitro',
     prerender: {
       // Pre-render the homepage
       routes: ['/'],
       // Then crawl all the links on the page
       crawlLinks: true,
     },
-  },
-
-  build: {
-    transpile: ['@heroicons/vue'],
   },
   css: ['~/assets/css/main.css'],
 

@@ -1,11 +1,10 @@
 import jsESlint from '@eslint/js'
 import tsESlint from 'typescript-eslint'
 import pluginVue from 'eslint-plugin-vue'
-import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default [
   {
-    ignores: ['.output/', '.serverless/', '.nuxt/'],
+    ignores: ['.output/', '.nuxt/'],
   },
   jsESlint.configs.recommended,
   ...tsESlint.configs.recommended,
@@ -16,5 +15,4 @@ export default [
       'vue/multi-word-component-names': 'off',
     },
   },
-  eslintConfigPrettier, // eslint-config-prettier last
 ]
