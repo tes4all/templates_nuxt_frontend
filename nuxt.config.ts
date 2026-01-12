@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   ssr: true,
   devtools: { enabled: true },
   nitro: {
-    preset: 'docker',
+    preset: 'node-server',
     prerender: {
       // Pre-render the homepage
       routes: ['/'],
