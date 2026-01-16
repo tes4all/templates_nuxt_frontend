@@ -71,17 +71,7 @@
   },
   "pnpm": {
     "overrides": {
-      "@aws-sdk/types": "^3.535.0"
-    },
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@tailwindcss/oxide",
-      "aws-sdk",
-      "better-sqlite3",
-      "core-js",
-      "esbuild",
-      "serverless",
-      "vue-demi"
-    ]
+      "h3": "^1.15.5"
+    }
   }
 }

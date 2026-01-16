@@ -6,6 +6,7 @@ settings:
 
 overrides:
   '@aws-sdk/types': ^3.535.0
+  h3: ^1.15.5
 
 importers:
 
