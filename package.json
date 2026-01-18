@@ -21,7 +21,7 @@
     "@nuxt/schema": "^4.2.2",
     "@tailwindcss/vite": "^4.1.18",
     "@vueuse/core": "^14.1.0",
-    "better-sqlite3": "^12.6.0",
+    "better-sqlite3": "^12.6.2",
     "class-variance-authority": "^0.7.1",
     "express": "^5.2.1",
     "lucide-vue-next": "^0.562.0",
