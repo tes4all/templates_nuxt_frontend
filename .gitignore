@@ -31,3 +31,9 @@ yarn-error.log*
 .cache
 
 build
+
+# env files (runtime config — never commit)
+.env
+
+# test coverage
+coverage

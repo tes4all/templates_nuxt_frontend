@@ -1,0 +1,13 @@
+{
+  "format_on_save": "on",
+  "formatter": "prettier",
+  "languages": {
+    "Vue.js": { "formatter": "prettier" },
+    "TypeScript": { "formatter": "prettier" },
+    "JSON": { "formatter": "prettier" },
+    "CSS": { "formatter": "prettier" }
+  },
+  "file_types": {
+    "Vue.js": ["vue"]
+  }
+}

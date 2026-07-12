@@ -1,0 +1,46 @@
+when:
+  - event: [push, pull_request, tag]
+
+steps:
+  install:
+    image: oven/bun:1
+    commands:
+      - bun install --frozen-lockfile --ignore-scripts
+      - bun run postinstall
+
+  format:
+    image: oven/bun:1
+    depends_on: [install]
+    commands:
+      - bun run format:check
+
+  lint:
+    image: oven/bun:1
+    depends_on: [install]
+    commands:
+      - bun run lint:check
+
+  typecheck:
+    image: oven/bun:1
+    depends_on: [install]
+    commands:
+      - bun run typecheck
+
+  test:
+    image: oven/bun:1
+    depends_on: [install]
+    commands:
+      - bun run test
+
+  build:
+    image: oven/bun:1
+    depends_on: [format, lint, typecheck, test]
+    commands:
+      - bun run generate
+
+  # Performance budget is a failing gate, not a report (performance mandate).
+  lighthouse:
+    image: node:26
+    depends_on: [build]
+    commands:
+      - npx --yes @lhci/cli@latest autorun --config=.lighthouserc.json

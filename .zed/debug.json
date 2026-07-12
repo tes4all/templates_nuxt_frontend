@@ -1,0 +1,9 @@
+[
+  {
+    "label": "Attach to Nuxt dev server (start with: bun run dev --inspect)",
+    "adapter": "JavaScript",
+    "request": "attach",
+    "port": 9229,
+    "cwd": "$ZED_WORKTREE_ROOT"
+  }
+]

@@ -1,31 +1,64 @@
 # templates_nuxt_frontend
 
+TES base template for customer websites: Nuxt 4 + Tailwind 4 + shadcn-vue (reka-ui).
+
+Two delivery classes, one framework:
+
+- **static** — `bun run generate`, output served from nginx/CDN (no Node at runtime)
+- **dynamic** — `bun run build`, Node server container (see `Dockerfile`)
+
+Blocks are static by default (no client JS). Interactivity is opt-in per block via
+lazy hydration (`<LazyBlockX hydrate-on-visible />`). Per-tenant theming is done
+exclusively through the CSS variables in `app/assets/css/main.css`.
+
 ## Setup
 
 ```bash
 bun install
+cp .env.example .env
 ```
 
-## Development Server
+Runtime configuration (also for containers, read at start — never baked into the build):
+`NUXT_PUBLIC_SITE_URL`, `NUXT_PUBLIC_SITE_NAME`, `NUXT_PUBLIC_SITE_DESCRIPTION`.
 
-Start the development server on http://localhost:3000
+## Development
 
 ```bash
-bun dev
+bun run dev            # http://localhost:3000
+bun run dev --inspect  # + Node inspector on :9229 (Zed: "Attach to Nuxt dev server")
+```
+
+Editor settings for Zed (format-on-save with Prettier, debug config) are committed
+under `.zed/`. Install the Zed **Vue** extension for SFC support.
+
+## Checks
+
+```bash
+bun run format:check   # prettier
+bun run lint:check     # eslint (@nuxt/eslint)
+bun run typecheck      # vue-tsc
+bun run test           # vitest (@nuxt/test-utils)
 ```
 
 ## Production
 
-Build the application for production:
-
 ```bash
-bun build
+bun run build          # Node server -> .output/
+bun run generate       # static site -> .output/public/
+docker build -t site . # multi-stage: bun build -> node:26-slim runtime
 ```
 
-Locally preview production build:
+Health endpoint: `GET /api/health` (Docker HEALTHCHECK, k8s probes).
+
+## i18n
+
+`@nuxtjs/i18n`, default locale `de`, strategy `prefix_except_default`.
+Locale files live in `i18n/locales/`.
+
+## Adding UI components
 
 ```bash
-bun preview
+bunx --bun shadcn-vue@latest add <component>
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Components land in `app/components/ui/` (style `new-york`, reka-ui based).
