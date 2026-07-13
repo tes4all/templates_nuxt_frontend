@@ -1,5 +1,9 @@
 # templates_nuxt_frontend
 
+> **MOVED (2026-07-14):** development continues at `TES/nuxt-frontend` on the JEP platform forge
+> (split into the `@tes/nuxt-layer` npm package + copier customer template).
+> This GitHub repo is a snapshot up to Phase 1 (`d707c74`) and will become a read-only mirror of the new repo.
+
 TES base template for customer websites: Nuxt 4 + Tailwind 4 + shadcn-vue (reka-ui).
 
 Two delivery classes, one framework:
